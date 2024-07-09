@@ -1,13 +1,15 @@
 import fastify from 'fastify' // Importa o framework Fastify para criar o servidor
 import cors from '@fastify/cors' // Importa o plugin de CORS para habilitar requisições de diferentes origens
-import { createTrip } from './routes/create-trip' // Importa a rota para criação de viagem
 import {
   serializerCompiler,
   validatorCompiler
 } from 'fastify-type-provider-zod' // Importa os compiladores de serializer e validator do Zod para usar com Fastify
+
+import { createTrip } from './routes/create-trip' // Importa a rota para criação de viagem
 import { confirmTrip } from './routes/confirm-trip' // Importa a rota para confirmação de viagem
 import { confirmParticipants } from './routes/confirm-participant' // Importa a rota para confirmação de participantes
 import { createActivity } from './routes/create-activity'
+import { getActivity } from './routes/get-activities'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -23,6 +25,7 @@ app.register(confirmTrip) // Registra a rota de confirmação de viagem
 app.register(confirmParticipants) // Registra a rota de confirmação de participantes
 
 app.register(createActivity) // Registra a rota de criação de atividade
+app.register(getActivity) // Registra a rota de obtenção de atividades
 
 app.listen({ port: 3333 }).then(() => {
   console.log('Server is running on port 3333') // Inicia o servidor na porta 3333 e exibe uma mensagem no console
