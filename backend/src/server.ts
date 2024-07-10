@@ -18,6 +18,7 @@ import { updateTrip } from './routes/update-trip'
 import { getTripDetails } from './routes/get-trip-details'
 import { getParticipant } from './routes/get-participant'
 import { errorHandle } from './error-handle'
+import { env } from './env'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -47,6 +48,6 @@ app.register(getLinks) // Registra a rota de obtenção de links
 
 app.register(createInvite) // Registra a rota de criação de convite
 
-app.listen({ port: 3333 }).then(() => {
-  console.log('Server is running on port 3333') // Inicia o servidor na porta 3333 e exibe uma mensagem no console
+app.listen({ port: env.PORT }).then(() => {
+  console.log(`Server is running on port ${env.PORT}`) // Inicia o servidor na porta 3333 e exibe uma mensagem no console
 })

@@ -3,6 +3,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod' // Importa o provedo
 import { prisma } from '../lib/prisma' // Importa o cliente Prisma para interação com o banco de dados
 import z from 'zod' // Importa a biblioteca Zod para validação de esquemas
 import { ClientError } from '../errors/client-error'
+import { env } from '../env'
 
 export async function confirmParticipants(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -29,7 +30,7 @@ export async function confirmParticipants(app: FastifyInstance) {
 
       if (participant && participant.is_confirmed) {
         return reply.redirect(
-          `http://localhost:3000/trips/${participant.trip_id}`
+          `${env.WEB_BASE_URL}/trips/${participant.trip_id}`
         ) // Redireciona se o participante já está confirmado
       }
 
@@ -42,9 +43,7 @@ export async function confirmParticipants(app: FastifyInstance) {
         }
       })
 
-      return reply.redirect(
-        `http://localhost:3000/trips/${participant.trip_id}`
-      ) // Redireciona para a página da viagem
+      return reply.redirect(`${env.WEB_BASE_URL}/trips/${participant.trip_id}`) // Redireciona para a página da viagem
     }
   )
 }

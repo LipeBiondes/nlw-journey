@@ -6,6 +6,7 @@ import z from 'zod' // Importa a biblioteca Zod para validação de esquemas
 import { prisma } from '../lib/prisma' // Importa o cliente Prisma para interação com o banco de dados
 import { getMailClient } from '../lib/mail' // Importa uma função para obter um cliente de e-mail configurado
 import { ClientError } from '../errors/client-error'
+import { env } from '../env'
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -73,7 +74,7 @@ export async function createTrip(app: FastifyInstance) {
       const formattedStartDate = dayjs(starts_at).format('LL') // Formata a data de início
       const formattedEndDate = dayjs(ends_at).format('LL') // Formata a data de término
 
-      const confirmationLink = `http://localhost:3333/trips/${trip.id}/confirm` // Gera o link de confirmação da viagem
+      const confirmationLink = `${env.API_BASE_URL}/trips/${trip.id}/confirm` // Gera o link de confirmação da viagem
 
       const mail = await getMailClient() // Obtém o cliente de e-mail
 

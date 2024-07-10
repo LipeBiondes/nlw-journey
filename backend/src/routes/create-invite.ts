@@ -7,6 +7,7 @@ import { getMailClient } from '../lib/mail'
 import z from 'zod' // Importa a biblioteca Zod para validação de esquemas
 import nodemailer from 'nodemailer' // Importa a biblioteca nodemailer para envio de e-mails
 import { ClientError } from '../errors/client-error'
+import { env } from '../env'
 
 export async function createInvite(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -45,7 +46,7 @@ export async function createInvite(app: FastifyInstance) {
 
       const mail = await getMailClient() // Obtém o cliente de e-mail
 
-      const confirmationLink = `http://localhost:3333/participants/${participant.id}/confirm` // Gera o link de confirmação para cada participante
+      const confirmationLink = `${env.API_BASE_URL}/participants/${participant.id}/confirm` // Gera o link de confirmação para cada participante
 
       const message = await mail.sendMail({
         from: {
