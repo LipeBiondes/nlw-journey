@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify' // Importa o tipo FastifyInstance do f
 import { ZodTypeProvider } from 'fastify-type-provider-zod' // Importa o provedor de tipos Zod para validação de esquemas no Fastify
 import { prisma } from '../lib/prisma' // Importa o cliente Prisma para interação com o banco de dados
 import z from 'zod' // Importa a biblioteca Zod para validação de esquemas
+import { ClientError } from '../errors/client-error'
 
 export async function createLink(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -26,7 +27,7 @@ export async function createLink(app: FastifyInstance) {
       })
 
       if (!trip) {
-        throw new Error('Trip not found') // Verifica se a viagem existe
+        throw new ClientError('Trip not found') // Verifica se a viagem existe
       }
 
       const link = await prisma.link.create({

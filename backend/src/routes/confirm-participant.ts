@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify' // Importa o tipo FastifyInstance do f
 import { ZodTypeProvider } from 'fastify-type-provider-zod' // Importa o provedor de tipos Zod para validação de esquemas no Fastify
 import { prisma } from '../lib/prisma' // Importa o cliente Prisma para interação com o banco de dados
 import z from 'zod' // Importa a biblioteca Zod para validação de esquemas
+import { ClientError } from '../errors/client-error'
 
 export async function confirmParticipants(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -23,7 +24,7 @@ export async function confirmParticipants(app: FastifyInstance) {
       })
 
       if (!participant) {
-        throw new Error('Participant not found') // Verifica se o participante existe
+        throw new ClientError('Participant not found') // Verifica se o participante existe
       }
 
       if (participant && participant.is_confirmed) {

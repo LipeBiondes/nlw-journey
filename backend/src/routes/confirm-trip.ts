@@ -5,6 +5,7 @@ import { prisma } from '../lib/prisma' // Importa o cliente Prisma para interaç
 import { getMailClient } from '../lib/mail' // Importa uma função para obter um cliente de e-mail configurado
 import z from 'zod' // Importa a biblioteca Zod para validação de esquemas
 import nodemailer from 'nodemailer' // Importa a biblioteca nodemailer para envio de e-mails
+import { ClientError } from '../errors/client-error'
 
 export async function confirmTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -34,7 +35,7 @@ export async function confirmTrip(app: FastifyInstance) {
       })
 
       if (!trip) {
-        throw new Error('Trip not found') // Verifica se a viagem existe
+        throw new ClientError('Trip not found') // Verifica se a viagem existe
       }
 
       if (trip && trip.is_confirmed) {
