@@ -12,6 +12,7 @@ import { createActivity } from './routes/create-activity'
 import { getActivity } from './routes/get-activities'
 import { createLink } from './routes/create-link'
 import { getLinks } from './routes/get-links'
+import { getParticipants } from './routes/get-participants'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -24,6 +25,8 @@ app.setSerializerCompiler(serializerCompiler) // Define o compilador de serializ
 
 app.register(createTrip) // Registra a rota de criação de viagem
 app.register(confirmTrip) // Registra a rota de confirmação de viagem
+
+app.register(getParticipants) // Registra a rota de obtenção de participantes
 app.register(confirmParticipants) // Registra a rota de confirmação de participantes
 
 app.register(createActivity) // Registra a rota de criação de atividade
