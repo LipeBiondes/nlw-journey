@@ -13,6 +13,7 @@ import { getActivity } from './routes/get-activities'
 import { createLink } from './routes/create-link'
 import { getLinks } from './routes/get-links'
 import { getParticipants } from './routes/get-participants'
+import { createInvite } from './routes/create-invite'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -34,6 +35,8 @@ app.register(getActivity) // Registra a rota de obtenção de atividades
 
 app.register(createLink) // Registra a rota de criação de link
 app.register(getLinks) // Registra a rota de obtenção de links
+
+app.register(createInvite) // Registra a rota de criação de convite
 
 app.listen({ port: 3333 }).then(() => {
   console.log('Server is running on port 3333') // Inicia o servidor na porta 3333 e exibe uma mensagem no console
