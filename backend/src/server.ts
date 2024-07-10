@@ -16,6 +16,7 @@ import { getParticipants } from './routes/get-participants'
 import { createInvite } from './routes/create-invite'
 import { updateTrip } from './routes/update-trip'
 import { getTripDetails } from './routes/get-trip-details'
+import { getParticipant } from './routes/get-participant'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -32,6 +33,7 @@ app.register(updateTrip) // Registra a rota de atualização de viagem
 app.register(getTripDetails) // Registra a rota de obtenção de detalhes da viagem
 
 app.register(getParticipants) // Registra a rota de obtenção de participantes
+app.register(getParticipant) // Registra a rota de obtenção de participante
 app.register(confirmParticipants) // Registra a rota de confirmação de participantes
 
 app.register(createActivity) // Registra a rota de criação de atividade
