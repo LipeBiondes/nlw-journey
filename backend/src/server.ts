@@ -17,6 +17,7 @@ import { createInvite } from './routes/create-invite'
 import { updateTrip } from './routes/update-trip'
 import { getTripDetails } from './routes/get-trip-details'
 import { getParticipant } from './routes/get-participant'
+import { errorHandle } from './error-handle'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -26,6 +27,8 @@ app.register(cors, {
 
 app.setValidatorCompiler(validatorCompiler) // Define o compilador de validação usando Zod
 app.setSerializerCompiler(serializerCompiler) // Define o compilador de serialização usando Zod
+
+app.setErrorHandler(errorHandle) // Define o tratamento de erros padrão
 
 app.register(createTrip) // Registra a rota de criação de viagem
 app.register(confirmTrip) // Registra a rota de confirmação de viagem
