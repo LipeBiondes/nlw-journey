@@ -9,3 +9,33 @@
 input {
   color-scheme: dark;
 }
+
+.rdp-button[aria-selected='true'] {
+  background: #bef264;
+  color: #1a2e05;
+
+  &.rdp-button[aria-selected='true']:hover {
+    background: #1a2e05;
+    color: #fafafa;
+    border: #bef264 0.1875rem solid;
+  }
+}
+
+.rdp-button:not(.rdp-button[aria-selected='true']),
+.rdp-button:not([aria-label='']) {
+  &:hover {
+    background: #3f3f46;
+    color: #fafafa;
+  }
+
+  &:active {
+    background: #1a2e05;
+    color: #fafafa;
+    border: #bef264 0.1875rem solid;
+  }
+  &:focus-visible {
+    outline-color: #bef264;
+    border-color: #bef264;
+    background: #09090b;
+  }
+}

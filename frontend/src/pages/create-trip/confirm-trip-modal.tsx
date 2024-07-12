@@ -3,13 +3,19 @@ import { FormEvent } from 'react'
 import { Button } from '../components/button'
 
 interface ConfirmTripModalProps {
+  isCreatingTrip: boolean
   closeConfirmTripModal: () => void
   createTrip: (event: FormEvent<HTMLFormElement>) => void
+  setOwnerName: (ownerName: string) => void
+  setOwnerEmail: (ownerEmail: string) => void
 }
 
 export function ConfirmTripModal({
   closeConfirmTripModal,
-  createTrip
+  createTrip,
+  setOwnerEmail,
+  setOwnerName,
+  isCreatingTrip
 }: ConfirmTripModalProps) {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
@@ -47,6 +53,7 @@ export function ConfirmTripModal({
               required
               placeholder="Digite seu nome completo"
               className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+              onChange={event => setOwnerName(event.target.value)}
             />
           </div>
 
@@ -58,11 +65,18 @@ export function ConfirmTripModal({
               required
               placeholder="Seu email pessoal"
               className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+              onChange={event => setOwnerEmail(event.target.value)}
             />
           </div>
 
-          <Button type="submit" variant="primary" size="full">
-            Confirmar criação da viagem
+          <Button
+            disabled={isCreatingTrip}
+            type="submit"
+            variant="primary"
+            size="full"
+            buttonDisabled={isCreatingTrip ? 'actived' : 'disabled'}
+          >
+            {isCreatingTrip ? 'Criando viagem...' : 'Criar viagem'}
           </Button>
         </form>
       </div>

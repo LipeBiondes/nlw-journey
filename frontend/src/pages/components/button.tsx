@@ -11,11 +11,16 @@ const buttonVariants = tv({
     size: {
       default: 'py-2',
       full: 'w-full h-11'
+    },
+    buttonDisabled: {
+      actived: 'opacity-50 cursor-not-allowed',
+      disabled: ''
     }
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'default'
+    size: 'default',
+    buttonDisabled: 'disabled'
   }
 })
 
@@ -25,9 +30,18 @@ interface ButtonProps
   children: ReactNode
 }
 
-export function Button({ children, variant, size, ...props }: ButtonProps) {
+export function Button({
+  children,
+  variant,
+  size,
+  buttonDisabled,
+  ...props
+}: ButtonProps) {
   return (
-    <button {...props} className={buttonVariants({ variant, size })}>
+    <button
+      {...props}
+      className={buttonVariants({ variant, size, buttonDisabled })}
+    >
       {children}
     </button>
   )
