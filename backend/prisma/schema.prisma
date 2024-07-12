@@ -35,10 +35,11 @@ model Participant {
 }
 
 model Activity {
-  id        String   @id @default(uuid())
-  title     String
-  occurs_at DateTime
-  trip_id   String
+  id          String   @id @default(uuid())
+  title       String
+  occurs_at   DateTime
+  trip_id     String
+  is_was_done Boolean  @default(false)
 
   trip Trip @relation(fields: [trip_id], references: [id])
 

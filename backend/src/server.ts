@@ -19,6 +19,7 @@ import { getTripDetails } from './routes/get-trip-details'
 import { getParticipant } from './routes/get-participant'
 import { errorHandle } from './error-handle'
 import { env } from './env'
+import { confirmActivityDone } from './routes/confirm-activity-done'
 
 const app = fastify() // Cria uma instância do servidor Fastify
 
@@ -42,6 +43,7 @@ app.register(confirmParticipants) // Registra a rota de confirmação de partici
 
 app.register(createActivity) // Registra a rota de criação de atividade
 app.register(getActivity) // Registra a rota de obtenção de atividades
+app.register(confirmActivityDone) // Registra a rota de confirmação de atividades
 
 app.register(createLink) // Registra a rota de criação de link
 app.register(getLinks) // Registra a rota de obtenção de links
