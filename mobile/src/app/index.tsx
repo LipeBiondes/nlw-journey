@@ -1,4 +1,5 @@
-import { View, Text, Image } from 'react-native'
+import { useState } from 'react'
+import { View, Text, Image, Keyboard } from 'react-native'
 import {
   ArrowRight,
   Calendar as IconCalendar,
@@ -6,25 +7,49 @@ import {
   Settings2,
   UserRoundPlus
 } from 'lucide-react-native'
+import { DateData } from 'react-native-calendars'
+import dayjs from 'dayjs'
+
+import { calendarUtils, DatesSelected } from '@/utils/calendarUtils'
 
 import { colors } from '@/styles/colors'
 
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
-import { useState } from 'react'
+
+import { Modal } from '@/components/modal'
+import { Calendar } from '@/components/calendar'
 
 enum StepForm {
   TRIP_DETAILS = 1,
   ADD_EMAILS = 2
 }
 
+enum MODAL {
+  NONE = 0,
+  CALENDAR = 1,
+  GUESTS = 2
+}
+
 export default function Index() {
   const [stepForm, setStepForm] = useState<StepForm>(StepForm.TRIP_DETAILS)
+  const [showModal, setShowModal] = useState(MODAL.NONE)
+  const [selectedDates, setSelectedDates] = useState({} as DatesSelected)
 
   function handleNextStepForm() {
     if (stepForm === StepForm.TRIP_DETAILS) {
       return setStepForm(StepForm.ADD_EMAILS)
     }
+  }
+
+  function handleSelectDates(selectedDay: DateData) {
+    const dates = calendarUtils.orderStartsAtAndEndsAt({
+      startsAt: selectedDates.startsAt,
+      endsAt: selectedDates.endsAt,
+      selectedDay
+    })
+
+    setSelectedDates(dates)
   }
 
   return (
@@ -55,6 +80,12 @@ export default function Index() {
           <Input.Field
             placeholder="Quando?"
             editable={stepForm === StepForm.TRIP_DETAILS}
+            onFocus={() => Keyboard.dismiss()}
+            showSoftInputOnFocus={false}
+            onPressIn={() =>
+              stepForm === StepForm.TRIP_DETAILS && setShowModal(MODAL.CALENDAR)
+            }
+            value={selectedDates.formatDatesInText}
           />
         </Input>
 
@@ -95,6 +126,24 @@ export default function Index() {
         </Text>
         .
       </Text>
+
+      <Modal
+        title="Selecionar datas"
+        subtitle="Selecione a data de ida e volta da viagem"
+        visible={showModal === MODAL.CALENDAR}
+        onClose={() => setShowModal(MODAL.NONE)}
+      >
+        <View className="gap-4 mt-4">
+          <Calendar
+            onDayPress={handleSelectDates}
+            markedDates={selectedDates.dates}
+            minDate={dayjs().toISOString()}
+          />
+          <Button onPress={() => setShowModal(MODAL.NONE)}>
+            <Button.Title>Confirmar</Button.Title>
+          </Button>
+        </View>
+      </Modal>
     </View>
   )
 }

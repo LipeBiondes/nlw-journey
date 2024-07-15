@@ -10,6 +10,8 @@ import {
 } from '@expo-google-fonts/inter'
 import { Loading } from '@/components/loading'
 
+import '@/utils/dayjsLocaleConfig'
+
 export default function Layout() {
   const [fontsLoaded] = useFonts({
     Inter_500Medium,
